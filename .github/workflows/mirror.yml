@@ -1,0 +1,43 @@
+name: Daily Repo Mirror
+
+on:
+  schedule:
+    - cron: '0 10 * * *'   # Runs every day at 10:00 AM UTC
+  workflow_dispatch:         # Allows manual trigger from Actions tab
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write        # Needed to commit uploaded.txt back
+
+    steps:
+      - name: Checkout this workflow repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.WORKFLOW_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run mirror script
+        env:
+          SOURCE_OWNER:    ${{ secrets.SOURCE_OWNER }}
+          TARGET_OWNER:    ${{ secrets.TARGET_OWNER }}
+          TARGET_EMAIL:    ${{ secrets.TARGET_EMAIL }}
+          TARGET_GH_TOKEN: ${{ secrets.TARGET_GH_TOKEN }}
+        run: python mirror.py
+
+      - name: Commit updated uploaded.txt
+        run: |
+          git config user.email "${{ secrets.TARGET_EMAIL }}"
+          git config user.name "${{ secrets.TARGET_OWNER }}"
+          git add uploaded.txt
+          git diff --staged --quiet || git commit -m "Uploaded: $(tail -1 uploaded.txt)"
+          git push
