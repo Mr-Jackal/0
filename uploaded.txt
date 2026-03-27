@@ -4,3 +4,4 @@ SpotDL_Wrape
 Realtek-RTW89-Wi-Fi-Driver
 TMDB_LSA
 code-weavers
+py_visualer
