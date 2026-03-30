@@ -7,3 +7,4 @@ code-weavers
 py_visualer
 Chat-With-Cat-v2.1
 Chat_With_Cat-v2.0-
+Chat_With_Cat
