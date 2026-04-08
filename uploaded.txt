@@ -14,3 +14,4 @@ Exposed
 imdb-list-injector
 quietude
 aletheia
+PeerChat
