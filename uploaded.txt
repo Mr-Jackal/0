@@ -16,3 +16,4 @@ quietude
 aletheia
 PeerChat
 Vision-Mouse
+Personality-Decoder
