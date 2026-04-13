@@ -17,3 +17,4 @@ aletheia
 PeerChat
 Vision-Mouse
 Personality-Decoder
+glassedit-pro
